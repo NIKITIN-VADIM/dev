@@ -4,7 +4,6 @@ function sshp() {
 
 echo "===> clean folder"
 sshp "rm -rf $REMOTE_PATH && mkdir $REMOTE_PATH"
-
 echo "===> deploy"
 tar cf - -C dist . | sshp "tar x -C $REMOTE_PATH"
 
