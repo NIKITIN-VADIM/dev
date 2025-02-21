@@ -1,0 +1,103 @@
+---
+import { fetchMainData } from '#/backend-data/main'
+import JapaneseWotd from '#/components/services/JapaneseWotd'
+import LastSeen from '#/components/services/LastSeen'
+import A from '#/components/ui/A'
+import Section from '#/components/ui/Section.astro'
+import Table from '#/components/ui/Table.astro'
+import DefaultLayout from '#/layouts/DefaultLayout/DefaultLayout.astro'
+import { ayaya10h, gochuumonShiki, me } from '#/urls'
+import randomInt from '#/utils/random-int'
+
+const data = await fetchMainData()
+
+const hi = 'h' + 'i'.repeat(randomInt(1, 5))
+---
+
+<DefaultLayout>
+  <Section>
+    <h1>{hi}!</h1>
+
+    <p>
+      i am <b>vadim</b> aka <A href={me.mynickname}>Vadim</A>
+      <br />
+      yet another dev, so <A href={me.github}>my github</A>
+    </p>
+
+    <p>currently i am learning web developing and japanese</p>
+  </Section>
+
+  <Section title="personal info">
+    <Table>
+      languages
+      <p>[ru] native [en] maybe [ja] learn</p>
+
+      languages
+      <p>[js/ts] love</p>
+
+      birth day
+      <p>feb 9 (aquarius)</p>
+
+      {
+        data.lastSeenItems.length > 0 && (
+          <>
+            last seen
+            <LastSeen items={data.lastSeenItems} />
+          </>
+        )
+      }
+
+      fav anime
+      <p>
+        gochuumon wa usagi desu ka (<A href={gochuumonShiki}>shiki</A>)
+      </p>
+
+      fav music
+      <p>
+        hard metal and rock, happy jpop;
+        <br />
+        well, very diverse, check
+        <A href={me.lastfm}>last.fm</A>
+      </p>
+    </Table>
+  </Section>
+
+  <Section title="contacts">
+    <Table>
+      telegram
+      <p><A href={me.telegram}>@asyomei</A></p>
+
+      bluesky
+      <p><A href={me.bluesky}>@asyomei.org</A></p>
+
+      vk
+      <p><A href={me.vk}>@asyomei</A></p>
+
+      4pda
+      <p><A href={me.fourpda}>@vabgalimov</A></p>
+
+      email
+      <p>vadim at asyomei.org</p>
+
+      phone
+      <p>don't like</p>
+
+      mail
+      <p>why</p>
+    </Table>
+  </Section>
+
+  {
+    data.jpwotd && (
+      <Section title="japanese word of the day">
+        <JapaneseWotd data={data.jpwotd} />
+      </Section>
+    )
+  }
+
+  <Section title="useless links">
+    <p>
+      <A href={ayaya10h}>ayaya intensifies 10h</A> - why not
+    </p>
+  </Section>
+</DefaultLayout>
